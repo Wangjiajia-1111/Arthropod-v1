@@ -98,7 +98,7 @@ perl Arthropod assemble
 Usage: Arthropod assemble [commands] ...
 
 Commands:
-- fastp		Quality control and data-filtering of FASTQ files.
+- fastp		        Quality control and data-filtering of FASTQ files.
 - easy353		Based on reference sequences filter and assemble the transcriptome, the whole genome or genome skimming sequencing data to recover - target genes.
 - captus		Build phylogenomic datasets from multiple types of sequencing data based on reference sequences.
 - transSeq		Convert coding sequence into amino acid sequence.
@@ -135,10 +135,10 @@ Commands:
 
 - - alignment_muscle		Align the homologous gene sequences with muscle.
 - - alignment_mafft		Align the homologous gene sequences with mafft.
-- - Trim					Trim the alignment files with trimal.
+- - Trim			Trim the alignment files with trimal.
 - - RAxMLtree			Use multi-species coalescent-model to build the phylogenetic trees with RAxML(gene tree) and ASTRAL(species tree).
-- - iqtree				Use multi-species coalescent-model to build the phylogenetic trees with iqtree(gene tree) and ASTRAL(species tree).
-- - tree_plot				Visualization of the phylogeny tree.
+- - iqtree		        Use multi-species coalescent-model to build the phylogenetic trees with iqtree(gene tree) and ASTRAL(species tree).
+- - tree_plot		        Visualization of the phylogeny tree.
 ```
 
 - - Sequence alignment	muscle or mafft
