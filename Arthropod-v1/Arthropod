@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use ARTHROPODassemble;
+use ARTHROPODbuild_tree;
+
+PrintUsage() if @ARGV<1;
+
+my %commands=(
+        "assemble"      =>  0,
+        "build_tree"    =>  0
+        );
+
+my $com = shift @ARGV;
+if (defined $commands{$com}){
+    $commands{$com}=1;
+}
+else {
+    print STDERR "Invalid command: $com\n";
+    PrintUsage(); 
+}
+
+if($commands{"assemble"}){
+    assembly::assemble(@ARGV);
+} elsif ($commands{"build_tree"}){
+    build_tree::build_tree(@ARGV);
+}
+
+sub PrintUsage{
+    print STDERR "\nUsage: Arthropod <command> ...\n";
+    print STDERR "Avalable commands:\n";
+    print STDERR "\tassemble    \tAssemble transcriptome without reference genome and protein prediction\n";
+    print STDERR "\tbuild_tree  \tMultiple sequence alignment,sequence trim,build gene trees and the species tree\n";
+    exit(-1);
+}
+1
