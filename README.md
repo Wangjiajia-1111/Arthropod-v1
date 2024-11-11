@@ -49,13 +49,21 @@ conda install bioconda::fastp
 ```
 Necessary phylogenetic tree building software download
 - mafft and muscle	Align the homologous gene sequences
+```bash
 conda install muscle mafft -c bioconda
+```
 - trimal	Trim the alignment files
+```bash
 conda install bioconda::trimal
+```
 - iqtree and raxml	Construction of phylogenetic trees for single-gene species
+```bash
 conda install raxml iqtree -c bioconda
+```
 - astral	Use coalescent-model to construct species phylogenetic tree
+```bash
 conda install conda-forge::astral
+```
 
 #### Installation Arthropod procedures
 - Download the low-copy gene set for for the phylum Arthropod from Figshare Database (10.6084/m9.figshare.27644622)
@@ -74,34 +82,45 @@ export PERL5LIB=$PERL5LIB:/home/your_software_path:
 source ~/.bashrc
 ```
 - Test if Arthropod software is installed successfully: Arthropod. If you see the following content, congratulations! Arthropod is successfully installed. If not, see if all the requirements are satisfied or contact the authors for help.
-
+```bash
 Usage: Arthropod <command> ...
 
 Avalable commands:
 - assemble    	Assemble transcriptome without reference genome and protein prediction
 - build_tree	Multiple sequence alignment,sequence trim,build gene trees and the species tree
+```
 
 #### Usage
 ##### Step 1: Assemble new sequences using the arthropod low-copy gene library as reference fasta
+```bash
 perl Arthropod assemble
-Usage: Arthropod assemble [commands] ...
-Commands:
-fastp		Quality control and data-filtering of FASTQ files.
-easy353		Based on reference sequences filter and assemble the transcriptome, the whole genome or genome skimming sequencing data to recover target genes.
-captus		Build phylogenomic datasets from multiple types of sequencing data based on reference sequences.
-transSeq		Convert coding sequence into amino acid sequence.
 
+Usage: Arthropod assemble [commands] ...
+
+Commands:
+- fastp		Quality control and data-filtering of FASTQ files.
+- easy353		Based on reference sequences filter and assemble the transcriptome, the whole genome or genome skimming sequencing data to recover - target genes.
+- captus		Build phylogenomic datasets from multiple types of sequencing data based on reference sequences.
+- transSeq		Convert coding sequence into amino acid sequence.
+```
 - fastp	Quality control and data-filtering
+```bash
 perl Arthropod assemble fastp -h
-E.g.：perl Arthropod assemble fastp -t < thread_num> <fq1> <fq2> <output_dir> <prefix:latin name>
+```
+E.g.：`perl Arthropod assemble fastp -t < thread_num> <fq1> <fq2> <output_dir> <prefix:latin name>`
 - Assemble	captus or easy353
 - - captus (Recommend)
+```bash
 perl Arthropod assemble captus -h
-e.g.：perl Arthropod assemble captus -t <assemble threads> -T <extract threads> -c < Multi-threads> <FASTQ files directory or list> <latin name> <reference fasta directory>
+```
+E.g.：`perl Arthropod assemble captus -t <assemble threads> -T <extract threads> -c < Multi-threads> <FASTQ files directory or list> <latin name> <reference fasta directory>`
 - - easy353
+```bash
 perl Arthropod assemble easy353 -h
-E.g.：perl Arthropod assemble easy353 -t <filtering threads> -T <assembly threads> <fq1> <fq2> <reference fasta directory> <latin name>
-- Convert nucleotide sequence to amino acid sequence
+```
+E.g.：`perl Arthropod assemble easy353 -t <filtering threads> -T <assembly threads> <fq1> <fq2> <reference fasta directory> <latin name>`
+
+- - Convert nucleotide sequence to amino acid sequence
 ```bash
 perl Arthropod assemble transSeq -h
 perl Arthropod assemble transSeq <latin name_CAPTUSmerge>
@@ -109,34 +128,51 @@ perl Arthropod assemble transSeq <latin name_CAPTUSmerge>
 perl Arthropod assemble transSeq <latin name_Easy353merge>
 ```
 ##### Step 2: Constructing phylogenetic tree
-
+```bash
 Usage: Arthropod build_tree [commands] ...
+
 Commands:
-alignment_muscle		Align the homologous gene sequences with muscle.
-alignment_mafft		Align the homologous gene sequences with mafft.
-Trim					Trim the alignment files with trimal.
-RAxMLtree			Use multi-species coalescent-model to build the phylogenetic trees with RAxML(gene tree) and ASTRAL(species tree).
-iqtree				Use multi-species coalescent-model to build the phylogenetic trees with iqtree(gene tree) and ASTRAL(species tree).
-tree_plot				Visualization of the phylogeny tree.
-- Sequence alignment	muscle or mafft
+
+- - alignment_muscle		Align the homologous gene sequences with muscle.
+- - alignment_mafft		Align the homologous gene sequences with mafft.
+- - Trim					Trim the alignment files with trimal.
+- - RAxMLtree			Use multi-species coalescent-model to build the phylogenetic trees with RAxML(gene tree) and ASTRAL(species tree).
+- - iqtree				Use multi-species coalescent-model to build the phylogenetic trees with iqtree(gene tree) and ASTRAL(species tree).
+- - tree_plot				Visualization of the phylogeny tree.
+```
+
+- - Sequence alignment	muscle or mafft
 - - muscle
-`perl Arthropod build_tree alignment_muscle -h`
+```bash
+perl Arthropod build_tree alignment_muscle -h
+```
 E.g.：`perl Arthropod build_tree alignment_muscle -t <Multi-threads> -o <outdir> <OG fasta directory>`
 - - mafft (recommend)
-`perl Arthropod build_tree alignment_mafft -h`
+```bash
+perl Arthropod build_tree alignment_mafft -h
+```
 E.g.：`perl Arthropod build_tree alignment_mafft -t <alignment threads> -c <Multi-threads> -o <outdir> <OG fasta directory>`
 - Trim the alignment fasta
-`perl Arthropod build_tree trim -h`
+```bash
+perl Arthropod build_tree trim -h
+```
 E.g.：`perl Arthropod build_tree trim -t <Multi-threads> -o <outdir:2_trim_out> <alignment file directory>`
 - buildtree
 - - iqtree (Recommend)
-`perl Arthropod build_tree iqtree -h`
+```bash
+perl Arthropod build_tree iqtree -h
+```
 E.g.：`perl Arthropod build_tree iqtree -t <Multi-threads> -T <iqtree_threads> -m <model> -B 1000 -o <outdir> <trimal file directory>`
 - - raxml
+```bash
 perl Arthropod build_tree RAxMLtree -h
+```
 E.g.：`perl Arthropod build_tree RAxMLtree -t <Multi-threads> -T <raxml_threads> -m <model> -N 100 -o <outdir> <trimal file directory>`
 - Visualization of tree
-  perl Arthropod build_tree tree_plot -h$`
-E.g.：`$perl Arthropod build_tree tree_plot <tree file> <species group> <output prefix>`
+```bash
+perl Arthropod build_tree tree_plot -h
+```
+E.g.：`perl Arthropod build_tree tree_plot <tree file> <species group> <output prefix>`
+
 In addition, we can upload the final species tree file to the iTOL online website (https://itol.embl.de/upload.cgi) for beautification.
 
