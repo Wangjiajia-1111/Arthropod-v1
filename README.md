@@ -105,10 +105,11 @@ E.g.：perl Arthropod assemble easy353 -t <filtering threads> -T <assembly threa
 ```bash
 perl Arthropod assemble transSeq -h
 perl Arthropod assemble transSeq <latin name_CAPTUSmerge>
-or perl Arthropod assemble transSeq <latin name_Easy353merge>
+#### or
+perl Arthropod assemble transSeq <latin name_Easy353merge>
 ```
 ##### Step 2: Constructing phylogenetic tree
-perl Arthropod build_tree
+
 Usage: Arthropod build_tree [commands] ...
 Commands:
 alignment_muscle		Align the homologous gene sequences with muscle.
