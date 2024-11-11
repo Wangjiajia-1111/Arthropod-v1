@@ -7,10 +7,11 @@ Welcome to our Arthropod page! please follow below steps to install and configur
 R is utilized for visualization in Arthropod software. Please install R first and make sure R and Rscript are under your environment variables.
 - ###### R packages
 Several R packages are needed including ggplot2, ggtree and treeio packages. Follow the installation step, or you can install the packages by yourself.
+```R
 install.packages("ggtree")
 install.packages("ggplot2")
 install.packages("treeio")
-
+```
 #### perl Modules
 Several perl Modules are needed including bioperl and Log::Log4perl. 
 Follow the installation step to install by different methods:
