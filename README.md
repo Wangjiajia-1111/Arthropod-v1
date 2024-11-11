@@ -74,10 +74,12 @@ export PERL5LIB=$PERL5LIB:/home/your_software_path:
 source ~/.bashrc
 ```
 - Test if Arthropod software is installed successfully: Arthropod. If you see the following content, congratulations! Arthropod is successfully installed. If not, see if all the requirements are satisfied or contact the authors for help.
+
 Usage: Arthropod <command> ...
+
 Avalable commands:
-	assemble    	Assemble transcriptome without reference genome and protein prediction
-	build_tree	Multiple sequence alignment,sequence trim,build gene trees and the species tree
+- assemble    	Assemble transcriptome without reference genome and protein prediction
+- build_tree	Multiple sequence alignment,sequence trim,build gene trees and the species tree
 
 #### Usage
 ##### Step 1: Assemble new sequences using the arthropod low-copy gene library as reference fasta
@@ -100,10 +102,11 @@ e.g.：perl Arthropod assemble captus -t <assemble threads> -T <extract threads>
 perl Arthropod assemble easy353 -h
 E.g.：perl Arthropod assemble easy353 -t <filtering threads> -T <assembly threads> <fq1> <fq2> <reference fasta directory> <latin name>
 - Convert nucleotide sequence to amino acid sequence
+```bash
 perl Arthropod assemble transSeq -h
 perl Arthropod assemble transSeq <latin name_CAPTUSmerge>
 or perl Arthropod assemble transSeq <latin name_Easy353merge>
-
+```
 ##### Step 2: Constructing phylogenetic tree
 perl Arthropod build_tree
 Usage: Arthropod build_tree [commands] ...
