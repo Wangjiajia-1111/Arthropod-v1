@@ -16,26 +16,37 @@ install.packages("treeio")
 Several perl Modules are needed including bioperl and Log::Log4perl. 
 Follow the installation step to install by different methods:
 - ###### Ubuntu
+```bash
 sudo apt-get install liblog-log4perl-perl
 sudo apt install bioperl
+```
 - ###### CentOS
+```bash
 sudo yum install perl-Log-Log4perl
+```
 - ###### conda
+```bash
 conda install bioconda::perl-log-log4perl
 conda install bioconda::perl-bioperl
-
+```
 #### Necessary assembly software download
 - easy353	https://github.com/plant720/Easy353
+```bash
 git clone https://github.com/plant720/Easy353.git
 chmod +x Easy353/build_database.py
 chmod +X Easy353/easy353.py
 echo "export PATH=/your_path/Easy353:\$PATH" >> ~/.bashrc
 source ~/.bashrc
 pip install biopython psutil requests beautifulsoup4 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
 - captus	https://github.com/edgardomortiz/Captus
+```bash
 conda install bioconda::captus
+```
 - fastp	Quality control and data-filtering of FASTQ files
+```bash
 conda install bioconda::fastp
+```
 Necessary phylogenetic tree building software download
 - mafft and muscle	Align the homologous gene sequences
 conda install muscle mafft -c bioconda
@@ -49,13 +60,19 @@ conda install conda-forge::astral
 #### Installation Arthropod procedures
 - Download the low-copy gene set for for the phylum Arthropod from Figshare Database (10.6084/m9.figshare.27644622)
 - We could obtain the software in the Arthropod website and uncompress the Arthropod software package
+```bash
 wget https://github.com/Wangjiajia-1111/Arthropod-a-tool-for-phylogenomic-research-in-arthropods/blob/main/Arthropod-v1.tar
 tar -xvf Arthropod-v1.tar
+```
 - Add lib/ to LD_LIBRARY_PATH. To do this, add the following text to ~/.bashrc:
+```text
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/your_software_path:
 export PERL5LIB=$PERL5LIB:/home/your_software_path:
+```
 - and run:
+```bash
 source ~/.bashrc
+```
 - Test if Arthropod software is installed successfully: Arthropod. If you see the following content, congratulations! Arthropod is successfully installed. If not, see if all the requirements are satisfied or contact the authors for help.
 Usage: Arthropod <command> ...
 Avalable commands:
@@ -99,23 +116,23 @@ iqtree				Use multi-species coalescent-model to build the phylogenetic trees wit
 tree_plot				Visualization of the phylogeny tree.
 - Sequence alignment	muscle or mafft
 - - muscle
-perl Arthropod build_tree alignment_muscle -h
-E.g.：perl Arthropod build_tree alignment_muscle -t <Multi-threads> -o <outdir> <OG fasta directory>
+`perl Arthropod build_tree alignment_muscle -h`
+E.g.：`perl Arthropod build_tree alignment_muscle -t <Multi-threads> -o <outdir> <OG fasta directory>`
 - - mafft (recommend)
-perl Arthropod build_tree alignment_mafft -h
-E.g.：perl Arthropod build_tree alignment_mafft -t <alignment threads> -c <Multi-threads> -o <outdir> <OG fasta directory>
+`perl Arthropod build_tree alignment_mafft -h`
+E.g.：`perl Arthropod build_tree alignment_mafft -t <alignment threads> -c <Multi-threads> -o <outdir> <OG fasta directory>`
 - Trim the alignment fasta
-perl Arthropod build_tree trim -h
-E.g.：perl Arthropod build_tree trim -t <Multi-threads> -o <outdir:2_trim_out> <alignment file directory>
+`perl Arthropod build_tree trim -h`
+E.g.：`perl Arthropod build_tree trim -t <Multi-threads> -o <outdir:2_trim_out> <alignment file directory>`
 - buildtree
 - - iqtree (Recommend)
-perl Arthropod build_tree iqtree -h
-E.g.：perl Arthropod build_tree iqtree -t <Multi-threads> -T <iqtree_threads> -m <model> -B 1000 -o <outdir> <trimal file directory>
+`perl Arthropod build_tree iqtree -h`
+E.g.：`perl Arthropod build_tree iqtree -t <Multi-threads> -T <iqtree_threads> -m <model> -B 1000 -o <outdir> <trimal file directory>`
 - - raxml
 perl Arthropod build_tree RAxMLtree -h
-E.g.：perl Arthropod build_tree RAxMLtree -t <Multi-threads> -T <raxml_threads> -m <model> -N 100 -o <outdir> <trimal file directory>
+E.g.：`perl Arthropod build_tree RAxMLtree -t <Multi-threads> -T <raxml_threads> -m <model> -N 100 -o <outdir> <trimal file directory>`
 - Visualization of tree
-perl Arthropod build_tree tree_plot -h
-E.g.：perl Arthropod build_tree tree_plot <tree file> <species group> <output prefix>
+  perl Arthropod build_tree tree_plot -h$`
+E.g.：`$perl Arthropod build_tree tree_plot <tree file> <species group> <output prefix>`
 In addition, we can upload the final species tree file to the iTOL online website (https://itol.embl.de/upload.cgi) for beautification.
 
