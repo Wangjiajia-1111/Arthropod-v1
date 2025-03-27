@@ -90,8 +90,16 @@ Avalable commands:
 - build_tree	Multiple sequence alignment,sequence trim,build gene trees and the species tree
 ```
 
-### Usage
-#### Step 1: Assemble new sequences using the arthropod low-copy gene library as reference fasta
+## Usage
+We use the arthropod low-copy gene library generated in this study and the raw data of Macropsis flavida as examples
+```bash
+# low_copy_OG.tar (https://figshare.com/ndownloader/files/50343768)
+tar -xvf low_copy_OG.tar
+# raw data of Macropsis flavida
+wget https://download.cncb.ac.cn/gsa2/CRA020542/CRR1382787/CRR1382787_r1.fastq.gz
+wget https://download.cncb.ac.cn/gsa2/CRA020542/CRR1382787/CRR1382787_r2.fastq.gz
+```
+### Step 1: Assemble new sequences using the arthropod low-copy gene library as reference fasta
 ```bash
 perl Arthropod assemble
 
@@ -105,29 +113,50 @@ Commands:
 ```
 - fastp	Quality control and data-filtering
 ```bash
-perl Arthropod assemble fastp -h
+perl Arthropod assemble fastp -t < thread_num> <fq1> <fq2> <output_dir> <prefix:latin name>
+
+# example
+perl Arthropod assemble fastp -t 20 CRR1382787_r1.fastq.gz CRR1382787_r2.fastq.gz Macropsis_flavida_fastp Macropsis_flavida
+# The data generated after quality control are Macropsis_flavida_fastp/Macropsis_flavida_R1.fq.gz and Macropsis_flavida_fastp/Macropsis_flavida_R2.fq.gz
 ```
-E.g.：`perl Arthropod assemble fastp -t < thread_num> <fq1> <fq2> <output_dir> <prefix:latin name>`
+
 - Assemble	captus or easy353
-- - captus (Recommend)
+
+captus (Recommend)
 ```bash
-perl Arthropod assemble captus -h
+perl Arthropod assemble captus -t <assemble threads> -T <extract threads> -c < Multi-threads> <FASTQ files directory or list> <latin name> <reference fasta directory>
+
+# example
+perl Arthropod assemble captus -t 60 -T 30 -c 4 Macropsis_flavida_fastp Macropsis_flavida low_copy_OG
+# The OG sequences assembled using captus based on the low copy gene library "low_copy_OG" are stored in the Macropsis_flavida_CAPTUSmerge directory.
 ```
-E.g.：`perl Arthropod assemble captus -t <assemble threads> -T <extract threads> -c < Multi-threads> <FASTQ files directory or list> <latin name> <reference fasta directory>`
-- - easy353
+
+easy353
 ```bash
-perl Arthropod assemble easy353 -h
+perl Arthropod assemble easy353 -t <filtering threads> -T <assembly threads> <fq1> <fq2> <reference fasta directory> <latin name>
+
+# example
+perl Arthropod assemble easy353 -t 4 -T 8  Macropsis_flavida_fastp/Macropsis_flavida_R1.fq.gz Macropsis_flavida_fastp/Macropsis_flavida_R2.fq.gz low_copy_OG Macropsis_flavida
+# The OG sequences assembled using easy353 based on the low copy gene library "low_copy_OG" are stored in the Macropsis_flavida_Easy353merge directory.
 ```
-E.g.：`perl Arthropod assemble easy353 -t <filtering threads> -T <assembly threads> <fq1> <fq2> <reference fasta directory> <latin name>`
 
 - - Convert nucleotide sequence to amino acid sequence
 ```bash
-perl Arthropod assemble transSeq -h
-```
-E.g.：`perl Arthropod assemble transSeq <latin name_CAPTUSmerge>`
-or `perl Arthropod assemble transSeq <latin name_Easy353merge>`
+perl Arthropod assemble transSeq <latin name_CAPTUSmerge>
 
-#### Step 2: Constructing phylogenetic tree
+# example
+perl Arthropod assemble transSeq Macropsis_flavida_CAPTUSmerge
+# The amino acid sequence of Convert is generated in the Macropsis_flavida_CAPTUSmerge_pep.
+```
+```bash
+perl Arthropod assemble transSeq <latin name_Easy353merge>
+
+# example
+perl Arthropod assemble transSeq Macropsis_flavida_Easy353merge
+# The amino acid sequence of Convert is generated in the Macropsis_flavida_Easy353Smerge_pep.
+```
+
+### Step 2: Constructing phylogenetic tree
 ```bash
 Usage: Arthropod build_tree [commands] ...
 
@@ -141,38 +170,60 @@ Commands:
 - - tree_plot		        Visualization of the phylogeny tree.
 ```
 
-- - Sequence alignment	muscle or mafft
-- - muscle
+- Sequence alignment	muscle or mafft
+
+muscle
 ```bash
-perl Arthropod build_tree alignment_muscle -h
+perl Arthropod build_tree alignment_muscle -t <Multi-threads> -o <outdir> <OG fasta directory>
+# example
+perl Arthropod build_tree alignment_muscle -t 4 -o Macropsis_flavida_CAPTUStree/1_alignment_muscle_out Macropsis_flavida_CAPTUSmerge_pep
 ```
-E.g.：`perl Arthropod build_tree alignment_muscle -t <Multi-threads> -o <outdir> <OG fasta directory>`
-- - mafft (recommend)
+
+
+mafft (recommend)
 ```bash
-perl Arthropod build_tree alignment_mafft -h
+perl Arthropod build_tree alignment_mafft -t <alignment threads> -c <Multi-threads> -o <outdir> <OG fasta directory>
+
+# example
+perl Arthropod build_tree alignment_mafft -t 4 -c 30 -o Macropsis_flavida_CAPTUStree/1_alignment_mafft_out Macropsis_flavida_CAPTUSmerge_pep
 ```
-E.g.：`perl Arthropod build_tree alignment_mafft -t <alignment threads> -c <Multi-threads> -o <outdir> <OG fasta directory>`
+
 - Trim the alignment fasta
 ```bash
-perl Arthropod build_tree trim -h
+perl Arthropod build_tree trim -t <Multi-threads> -o <outdir:2_trim_out> <alignment file directory>
+
+# example
+perl Arthropod build_tree trim -t 30 -o Macropsis_flavida_CAPTUStree/2_trim_out Macropsis_flavida_CAPTUStree/1_alignment_mafft_out
 ```
-E.g.：`perl Arthropod build_tree trim -t <Multi-threads> -o <outdir:2_trim_out> <alignment file directory>`
-- buildtree
-- - iqtree (Recommend)
+
+- constructe tree
+
+iqtree (Recommend)
 ```bash
-perl Arthropod build_tree iqtree -h
+perl Arthropod build_tree iqtree -t <Multi-threads> -T <iqtree_threads> -m <model> -B 1000 -o <outdir> <trimal file directory>
+
+# example
+perl Arthropod build_tree iqtree -t 15 -T 4 -m MF -B 1000 -o Macropsis_flavida_CAPTUStree/3_iqtree_out Macropsis_flavida_CAPTUStree/2_trim_out
+# The final species tree is Macropsis_flavida_CAPTUStree/3_iqtree_out/astral_out/astral_coalescent.result
 ```
-E.g.：`perl Arthropod build_tree iqtree -t <Multi-threads> -T <iqtree_threads> -m <model> -B 1000 -o <outdir> <trimal file directory>`
-- - raxml
+
+raxml
 ```bash
-perl Arthropod build_tree RAxMLtree -h
+perl Arthropod build_tree RAxMLtree -t <Multi-threads> -T <raxml_threads> -m <model> -N 100 -o <outdir> <trimal file directory>
+
+# example
+perl Arthropod build_tree RAxMLtree -t 15 -T 4 -m PROTGAMMAJTT -N 100 -o Macropsis_flavida_CAPTUStree/3_raxml_out Macropsis_flavida_CAPTUStree/2_trim_out
+# The final species tree is Macropsis_flavida_CAPTUStree/3_raxml_out/astral_out/astral_coalescent.result
 ```
-E.g.：`perl Arthropod build_tree RAxMLtree -t <Multi-threads> -T <raxml_threads> -m <model> -N 100 -o <outdir> <trimal file directory>`
+
 - Visualization of tree
 ```bash
-perl Arthropod build_tree tree_plot -h
+perl Arthropod build_tree tree_plot <tree file> <species group> <output prefix>
+
+# example
+Rscript tree_plot_order.r Macropsis_flavida_CAPTUStree/3_iqtree_out/astral_out/astral_coalescent.result species_color.txt Arthropod_add-Macropsis_flavida_order
+# Visualization of the tree are Arthropod_add-Macropsis_flavida_order.circular_tree.pdf and Arthropod_add-Macropsis_flavida_order.rectangular_tree.pdf
 ```
-E.g.：`perl Arthropod build_tree tree_plot <tree file> <species group> <output prefix>`
 
 In addition, we can upload the final species tree file to the iTOL online website (https://itol.embl.de/upload.cgi) for beautification.
 
