@@ -1,11 +1,11 @@
-#### Welcome
+## Welcome
 Welcome to our Arthropod page! please follow below steps to install and configure your environment variables for command line or web version. Please make sure that command line works well prior to the installation of web version.
 
-#### Requirements
-##### R
-- ###### R 4.1 or later (https://www.r-project.org/)
+### Requirements
+#### R
+- ##### R 4.1 or later (https://www.r-project.org/)
 R is utilized for visualization in Arthropod software. Please install R first and make sure R and Rscript are under your environment variables.
-- ###### R packages
+- ##### R packages
 Several R packages are needed including ggplot2, ggtree and treeio packages. Follow the installation step, or you can install the packages by yourself.
 ```R
 install.packages("ggtree")
@@ -15,16 +15,16 @@ install.packages("treeio")
 #### perl Modules
 Several perl Modules are needed including bioperl and Log::Log4perl. 
 Follow the installation step to install by different methods:
-- ###### Ubuntu
+- ##### Ubuntu
 ```bash
 sudo apt-get install liblog-log4perl-perl
 sudo apt install bioperl
 ```
-- ###### CentOS
+- ##### CentOS
 ```bash
 sudo yum install perl-Log-Log4perl
 ```
-- ###### conda
+- ##### conda
 ```bash
 conda install bioconda::perl-log-log4perl
 conda install bioconda::perl-bioperl
@@ -90,8 +90,8 @@ Avalable commands:
 - build_tree	Multiple sequence alignment,sequence trim,build gene trees and the species tree
 ```
 
-#### Usage
-##### Step 1: Assemble new sequences using the arthropod low-copy gene library as reference fasta
+### Usage
+#### Step 1: Assemble new sequences using the arthropod low-copy gene library as reference fasta
 ```bash
 perl Arthropod assemble
 
@@ -123,11 +123,11 @@ E.g.：`perl Arthropod assemble easy353 -t <filtering threads> -T <assembly thre
 - - Convert nucleotide sequence to amino acid sequence
 ```bash
 perl Arthropod assemble transSeq -h
-perl Arthropod assemble transSeq <latin name_CAPTUSmerge>
-#### or
-perl Arthropod assemble transSeq <latin name_Easy353merge>
 ```
-##### Step 2: Constructing phylogenetic tree
+E.g.：`perl Arthropod assemble transSeq <latin name_CAPTUSmerge>`
+or `perl Arthropod assemble transSeq <latin name_Easy353merge>`
+
+#### Step 2: Constructing phylogenetic tree
 ```bash
 Usage: Arthropod build_tree [commands] ...
 
