@@ -486,7 +486,7 @@ sub iqtree{
         -t              <int>       Multi-threading number. default=4
         -o              <str>       Output directory. default=3_iqtree_out
         -T              <str>       Specify the iqtree number of threads. default=4
-        -m              <str>       Set the model of DNA or Protein substitution. default=GTR
+        -m              <str>       Set the model of DNA or Protein substitution. default=MFP
         -B              <int>       Replicates for ultrafast bootstrap (>=1000). default=1000
         ";
 
@@ -521,7 +521,7 @@ sub iqtree{
     my $thread_iqtree = 4;
     $thread_iqtree = $opt_T if defined($opt_T);
     # set model and bootstrap
-    my $model = "GTR";
+    my $model = "MFP";
     $model = $opt_m if defined($opt_m);
     my $bootstrap = 1000;
     $bootstrap = $opt_B if defined($opt_B);
